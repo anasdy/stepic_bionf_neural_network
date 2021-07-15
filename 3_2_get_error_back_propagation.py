@@ -27,14 +27,15 @@ def get_error(deltas, sums, weights):
 
     """
     n_l = np.shape(sums)[1]
-    deltas_l = np.zeros(n_l, 1)
+    n_delt = (n_l, 1)
+    deltas_l = np.zeros(n_delt)
+    E = np.ones(n_delt)
     n_samples = np.shape(deltas)[0]
-    E = np.eye(n_l)
     for sample in range(n_samples):
         activation = np.transpose(sigmoid(sums[sample]))
         mul_1 = np.dot(np.transpose(weights), np.transpose(deltas[sample]))
         mul_2 = mul_1 * activation
-        deltas_l_i = mul_2 * (E - activation)    #I think E must be not yey. But what...
+        deltas_l_i = mul_2 * (E - activation)
         deltas_l += deltas_l_i
     deltas_l = deltas_l / n_samples
     return deltas_l
